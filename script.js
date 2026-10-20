@@ -105,10 +105,38 @@ function setupMemoryPreview(memories) {
   document.body.append(preview);
 
   const hoverCapable = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const imageLoads = new Map();
   let activeTrigger = null;
   let interactionMode = null;
   let imageRequestId = 0;
   let positionFrame = 0;
+
+  function preloadMemory(memory) {
+    if (!memory?.image) return Promise.reject(new Error("Missing memory image"));
+
+    const source = new URL(memory.image, document.baseURI).href;
+    if (imageLoads.has(source)) return imageLoads.get(source);
+
+    const loader = new Image();
+    loader.decoding = "async";
+
+    const loadPromise = new Promise((resolve, reject) => {
+      loader.addEventListener("load", async () => {
+        try {
+          await loader.decode();
+        } catch {
+          // A completed load is still displayable when explicit decoding is unavailable.
+        }
+        resolve(source);
+      }, { once: true });
+      loader.addEventListener("error", () => reject(new Error(`Unable to load ${source}`)), { once: true });
+      loader.src = source;
+    });
+
+    imageLoads.set(source, loadPromise);
+    loadPromise.catch(() => imageLoads.delete(source));
+    return loadPromise;
+  }
 
   function positionPreview() {
     if (!activeTrigger) return;
@@ -191,31 +219,25 @@ function setupMemoryPreview(memories) {
     preview.setAttribute("aria-hidden", "false");
 
     const requestId = ++imageRequestId;
-    const source = new URL(memory.image, document.baseURI).href;
     image.alt = memory.alt ?? "";
 
-    const reveal = () => {
+    const reveal = (source) => {
       if (requestId !== imageRequestId || activeTrigger !== trigger) return;
-      positionPreview();
+      image.src = source;
       requestAnimationFrame(() => {
-        if (requestId === imageRequestId && activeTrigger === trigger) {
-          preview.classList.add("is-visible");
-        }
+        if (requestId !== imageRequestId || activeTrigger !== trigger) return;
+        positionPreview();
+        requestAnimationFrame(() => {
+          if (requestId === imageRequestId && activeTrigger === trigger) {
+            preview.classList.add("is-visible");
+          }
+        });
       });
     };
 
-    const handleError = () => {
+    preloadMemory(memory).then(reveal).catch(() => {
       if (requestId === imageRequestId) closePreview();
-    };
-
-    if (image.src !== source) image.src = memory.image;
-
-    if (image.complete && image.naturalWidth > 0) {
-      reveal();
-    } else {
-      image.addEventListener("load", reveal, { once: true });
-      image.addEventListener("error", handleError, { once: true });
-    }
+    });
   }
 
   triggers.forEach((trigger) => {
@@ -238,6 +260,19 @@ function setupMemoryPreview(memories) {
       }
     });
   });
+
+  if ("IntersectionObserver" in window) {
+    const preloadObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const memory = memories[Number(entry.target.dataset.memoryIndex)];
+        preloadMemory(memory).catch(() => {});
+        preloadObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: "500px 0px" });
+
+    triggers.forEach((trigger) => preloadObserver.observe(trigger));
+  }
 
   document.addEventListener("click", (event) => {
     const clickedTrigger = event.target instanceof Element
