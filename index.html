@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7eaf0">
+  <meta name="description" content="一封私人生日情书。">
+  <title>生日情书</title>
+  <link rel="preload" href="assets/concert-photo.jpg" as="image">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="cover" aria-labelledby="cover-title">
+    <div class="cover__meta">
+      <p id="cover-recipient"></p>
+      <time id="cover-date"></time>
+    </div>
+
+    <figure class="cover__photo">
+      <div class="cover__photo-window">
+        <img id="cover-photo" src="assets/concert-photo.jpg" alt="" width="3024" height="4032">
+        <span class="cover__photo-shutter" aria-hidden="true"></span>
+      </div>
+      <figcaption id="cover-caption"></figcaption>
+    </figure>
+
+    <div class="cover__title-block">
+      <p id="cover-note" class="cover__note"></p>
+      <h1 id="cover-title"></h1>
+    </div>
+
+    <p id="cover-subtitle" class="cover__aside"></p>
+  </header>
+
+  <main>
+    <section id="memory" class="interlude" aria-labelledby="interlude-title">
+      <figure class="interlude__photo reveal">
+        <div class="interlude__photo-window">
+          <img id="detail-photo" src="assets/second-photo.jpg" alt="" width="2066" height="3672" loading="lazy">
+        </div>
+        <figcaption id="detail-caption"></figcaption>
+      </figure>
+
+      <div class="interlude__words reveal">
+        <p id="introduction-context" class="interlude__context"></p>
+        <h2 id="interlude-title"></h2>
+        <p id="introduction-closing"></p>
+      </div>
+    </section>
+
+    <article id="letter" class="letter" aria-labelledby="letter-heading">
+      <header class="letter__header">
+        <p id="letter-heading-date"></p>
+        <h2 id="letter-heading"></h2>
+      </header>
+
+      <div id="letter-body" class="letter__body"></div>
+
+      <div class="letter__ending">
+        <section class="letter__selfie" aria-label="信件结尾照片">
+          <p id="final-photo-note" class="letter__selfie-note" hidden></p>
+          <figure class="letter__selfie-media reveal">
+            <img id="final-photo" src="assets/selfie.jpg" alt="" width="2316" height="3088" loading="lazy">
+          </figure>
+        </section>
+
+        <footer class="letter__closing">
+          <p><span id="letter-signoff"></span><span id="letter-signature"></span></p>
+          <time id="letter-date"></time>
+        </footer>
+      </div>
+    </article>
+
+    <section class="save" aria-labelledby="save-heading">
+      <div class="save__copy">
+        <h2 id="save-heading">想要保存下来吗？</h2>
+        <p>打开打印窗口后，选择“另存为 PDF”即可保存。</p>
+      </div>
+      <button class="save__button" type="button" id="save-letter">
+        <span>保存这封信</span>
+        <span aria-hidden="true">打印为 PDF</span>
+      </button>
+      <p class="save__status" id="save-status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="letter.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

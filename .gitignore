@@ -1,0 +1,22 @@
+# Local agent tools and design references
+.agents/
+.codex/
+references/
+skills-lock.json
+
+# Local environment and secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Editor, OS, cache, and temporary files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak
+.browser-check/
+interlude-*.png
