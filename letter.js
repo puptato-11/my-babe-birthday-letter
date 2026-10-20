@@ -4,7 +4,11 @@
  * 修改正文：编辑 letter.paragraphs 数组中引号里的文字。
  * 增加段落：在 letter.paragraphs 中新增一行字符串，并用逗号与上一段分隔。
  * 修改署名：编辑 letter.signature；修改日期：编辑 date.display 和 date.iso。
- * 修改自拍旁的结束语：编辑 letter.finalPhoto.note；留空则不会显示。
+ * 修改署名隐藏批注：编辑 letter.signatureSecret；留空则不会显示。
+ * 修改自拍旁的结束语：编辑 letter.finalPhoto.note；悬停惊喜则编辑 letter.finalPhoto.secret。
+ * 修改信件开头照片：编辑 letter.openingPhoto 中的 image 和 alt。
+ * 修改隐藏照片：编辑 letter.memories；text 是触发文字，image 是照片路径，alt 是图片说明。
+ * 修改结尾庆祝触发文字：编辑 letter.celebration.text。
  * 需要在标题或引言中手动换行时，请增加数组中的一项，不需要写 <br>。
  */
 
@@ -23,12 +27,17 @@ window.LETTER_CONTENT = {
     recipient: "这是写给你的第几封信了？",
     note: "一封生日来信",
     titleLines: ["To 小兔🐇"],
+    rabbitBurst: {
+      text: "小兔",
+      emoji: "🐇"
+    },
     subtitleLines: [
       "感谢你在十月来到这个世界，",
       "让这个季节也变得特别。"
     ],
     photoCaption: "我会永远记住这天的，以后还要跟你一起看很多很多场演出",
-    photoAlt: "演唱会现场，两只戴着紫色发光灯条的手伸向灯海"
+    photoAlt: "演唱会现场，两只戴着紫色发光灯条的手伸向灯海",
+    photoBackText: "珍贵的人生初体验"
   },
 
   introduction: {
@@ -46,6 +55,53 @@ window.LETTER_CONTENT = {
   letter: {
     headingDate: "二〇二六年，秋",
     salutation: "我最爱的宝贝：",
+
+    openingPhoto: {
+      image: "assets/memories/babe.jpg",
+      alt: "戴着绿色帽子和眼镜坐在车厢里的近照"
+    },
+
+    memories: [
+      {
+        text: "海友酒店住的那半个月",
+        image: "assets/memories/hotel.jpg",
+        alt: "在海友酒店的房间里一起看电视"
+      },
+      {
+        text: "第一次在美国这么远的地方一起玩",
+        image: "assets/memories/chicago.jpg",
+        alt: "在芝加哥高空观景台拍下的合照"
+      },
+      {
+        text: "打开我们的日记本",
+        image: "assets/memories/notebook.jpg",
+        alt: "放在一起的几本二〇二六年日记本"
+      },
+      {
+        text: "每一个早晨",
+        image: "assets/memories/morning2.jpg",
+        alt: "清晨在床边拍下的日常照片"
+      },
+      {
+        text: "和你分开",
+        image: "assets/memories/bye1.jpg",
+        alt: "机场安检口前的一次分别"
+      },
+      {
+        text: "以天为单位",
+        image: "assets/memories/bye2.jpg",
+        alt: "登机口前拖着行李离开的背影"
+      },
+      {
+        text: "以月为单位",
+        image: "assets/memories/bye3.jpg",
+        alt: "车站闸门后回头望向镜头"
+      }
+    ],
+
+    celebration: {
+      text: "生日快乐"
+    },
 
     // 每个字符串会自动排成一个自然段。复制一行即可继续增加段落。
     
@@ -78,10 +134,12 @@ window.LETTER_CONTENT = {
 
     finalPhoto: {
       note: "a heart forever <3",
+      secret: "<3 <3 <3 <3 <3 <3 <3 <3 <3",
       alt: "我们的自拍"
     },
 
     signoff: "最爱你的，",
-    signature: "小小豆 o((⊙﹏⊙))o"
+    signature: "小小豆 o((⊙﹏⊙))o",
+    signatureSecret: "我会永远永远爱你"
   }
 };

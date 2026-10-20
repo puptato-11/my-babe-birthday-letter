@@ -17,9 +17,16 @@
     </div>
 
     <figure class="cover__photo">
-      <div class="cover__photo-window">
-        <img id="cover-photo" src="assets/concert-photo.jpg" alt="" width="3024" height="4032">
-        <span class="cover__photo-shutter" aria-hidden="true"></span>
+      <div class="cover__photo-window" id="cover-photo-flip">
+        <div class="cover__photo-card">
+          <div class="cover__photo-face cover__photo-face--front">
+            <img id="cover-photo" src="assets/concert-photo.jpg" alt="" width="3024" height="4032">
+            <span class="cover__photo-shutter" aria-hidden="true"></span>
+          </div>
+          <div class="cover__photo-face cover__photo-face--back" aria-hidden="true">
+            <p id="cover-photo-back-text"></p>
+          </div>
+        </div>
       </div>
       <figcaption id="cover-caption"></figcaption>
     </figure>
@@ -52,20 +59,25 @@
       <header class="letter__header">
         <p id="letter-heading-date"></p>
         <h2 id="letter-heading"></h2>
+        <figure class="letter__opening-photo" id="letter-opening-photo" hidden>
+          <img id="opening-photo" alt="" width="3024" height="4032" loading="lazy" decoding="async">
+        </figure>
       </header>
 
       <div id="letter-body" class="letter__body"></div>
 
       <div class="letter__ending">
         <section class="letter__selfie" aria-label="信件结尾照片">
-          <p id="final-photo-note" class="letter__selfie-note" hidden></p>
+          <p id="final-photo-note" class="letter__selfie-note" hidden><span id="final-photo-note-text" class="letter__selfie-note-text" role="button" tabindex="0" aria-controls="final-photo-secret" aria-expanded="false"></span><span id="final-photo-secret" class="letter__selfie-note-secret" aria-hidden="true"></span></p>
           <figure class="letter__selfie-media reveal">
             <img id="final-photo" src="assets/selfie.jpg" alt="" width="2316" height="3088" loading="lazy">
           </figure>
         </section>
 
         <footer class="letter__closing">
-          <p><span id="letter-signoff"></span><span id="letter-signature"></span></p>
+          <p class="letter__signature-line">
+            <span id="letter-signoff"></span><span class="letter__signature-wrap" id="letter-signature-wrap"><span id="letter-signature" class="letter__signature-trigger" role="button" tabindex="0" aria-controls="signature-secret" aria-expanded="false"></span><span id="signature-secret" class="letter__signature-secret" aria-hidden="true"></span></span>
+          </p>
           <time id="letter-date"></time>
         </footer>
       </div>
